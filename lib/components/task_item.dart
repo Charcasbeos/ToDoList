@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/models/task.dart';
 
-// ignore: must_be_immutable
 class TaskItem extends StatefulWidget {
-  Function(bool?)? onChecked;
-  Function(Task) onTap;
-  Task task;
-  TaskItem({
+  final Function(bool?)? onChecked;
+  final Function(Task) onTap;
+  final Task task;
+
+  const TaskItem({
     super.key,
     required this.task,
     required this.onChecked,
@@ -18,7 +18,6 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
-  // Chuyen int sang TimeOfDay
   TimeOfDay intToTimeOfDay(int minutes) {
     final int hour = minutes ~/ 60;
     final int minute = minutes % 60;
@@ -39,74 +38,83 @@ class _TaskItemState extends State<TaskItem> {
   Color _getColor(Category category) {
     switch (category) {
       case Category.task:
-        return Color(0xFFDBECF6);
+        return const Color(0xFFDBECF6);
       case Category.goal:
-        return Color(0xFFFEF5D3);
+        return const Color(0xFFFEF5D3);
       case Category.event:
-        return Color(0xFFE7E2F3);
+        return const Color(0xFFE7E2F3);
     }
   }
-  // Chuyển TimeOfDay sang phút
 
   @override
   Widget build(BuildContext context) {
+    // Lấy kích thước màn hình để scale UI
+    final screenWidth = MediaQuery.of(context).size.width;
+    final scale = screenWidth / 375; // 375 là width chuẩn (iPhone 11)
+
     return Padding(
-      padding: const EdgeInsets.only(top: 0),
+      padding: EdgeInsets.only(top: 8 * scale),
       child: Container(
-        height: 70,
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(
+          horizontal: 12 * scale,
+          vertical: 10 * scale,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16 * scale),
         ),
         child: Row(
           children: [
-            // Row con chứa icon + text, mờ khi completed
+            // Phần nội dung (icon + text)
             Expanded(
               child: GestureDetector(
                 onTap: () => widget.onTap(widget.task),
                 child: Opacity(
                   opacity: widget.task.isCompleted ? 0.5 : 1.0,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         backgroundColor: _getColor(widget.task.category),
+                        radius: 18 * scale,
                         child: Image.asset(
                           _getImage(widget.task.category),
                           color: Colors.black,
-                          width: 16,
-                          height: 16,
+                          width: 16 * scale,
+                          height: 16 * scale,
                         ),
                       ),
-                      SizedBox(width: 12),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.task.title,
-                            style: TextStyle(
-                              decoration: widget.task.isCompleted
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          if (widget.task.time != null)
+                      SizedBox(width: 12 * scale),
+                      Flexible(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text(
-                              intToTimeOfDay(
-                                widget.task.timeInMinutes!,
-                              ).format(context),
+                              widget.task.title,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 decoration: widget.task.isCompleted
                                     ? TextDecoration.lineThrough
                                     : TextDecoration.none,
-                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16 * scale,
                               ),
                             ),
-                        ],
+                            if (widget.task.timeInMinutes != null)
+                              Text(
+                                intToTimeOfDay(
+                                  widget.task.timeInMinutes!,
+                                ).format(context),
+                                style: TextStyle(
+                                  decoration: widget.task.isCompleted
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  fontSize: 14 * scale,
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -114,10 +122,13 @@ class _TaskItemState extends State<TaskItem> {
               ),
             ),
 
-            // Checkbox riêng, không bị mờ
-            Checkbox(
-              value: widget.task.isCompleted,
-              onChanged: widget.onChecked,
+            // Checkbox riêng
+            Transform.scale(
+              scale: scale, // scale checkbox theo màn hình
+              child: Checkbox(
+                value: widget.task.isCompleted,
+                onChanged: widget.onChecked,
+              ),
             ),
           ],
         ),
