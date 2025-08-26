@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todolist/components/task_item.dart';
+import 'package:todolist/main.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/pages/create_task_hive.dart';
 
 class TodoPageHive extends StatelessWidget {
   final Box<Task> tasksBox = Hive.box<Task>("tasksBox");
+
   TodoPageHive({super.key});
   void onChecked(value, Task? task) {
     if (task != null) {
@@ -131,41 +135,57 @@ class TodoPageHive extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               child: Container(
                 color: Colors.white,
-                height: 210,
                 child: ValueListenableBuilder(
                   valueListenable: tasksBox.listenable(),
                   builder: (context, Box<Task> box, _) {
-                    if (box.isEmpty) {
-                      return const Center(child: Text('No tasks'));
+                    // Lấy danh sách các task chua hoàn thành
+                    final completedTasks = box.values
+                        .where((task) => !task.isCompleted)
+                        .toList();
+
+                    // Kiểm tra danh sách rỗng
+                    if (completedTasks.isEmpty) {
+                      return Container(
+                        height: 70,
+                        child: const Center(child: Text('No tasks')),
+                      );
                     }
-                    return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: box.length,
-                      itemBuilder: (context, index) {
-                        final task = box.getAt(index);
-                        if (task == null || task.isCompleted) {
-                          return const SizedBox.shrink();
-                        }
-                        return Column(
-                          children: [
-                            TaskItem(
-                              task: task,
-                              onChecked: (value) => onChecked(value, task),
-                              onTap: (task) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        CreateTaskHive(taskToEdit: task),
-                                  ),
-                                );
-                              },
-                            ),
-                            if (index != box.length - 1)
-                              Divider(color: Colors.grey[300], height: 1),
-                          ],
-                        );
-                      },
+                    // Tính chiều cao động: mỗi TaskItem 70px, tối đa 210px
+                    double dynamicHeight = min(
+                      completedTasks.length * 70.0,
+                      210.0,
+                    );
+                    return SizedBox(
+                      height: dynamicHeight,
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: box.length,
+                        itemBuilder: (context, index) {
+                          final task = box.getAt(index);
+                          if (task == null || task.isCompleted) {
+                            return const SizedBox.shrink();
+                          }
+                          return Column(
+                            children: [
+                              TaskItem(
+                                task: task,
+                                onChecked: (value) => onChecked(value, task),
+                                onTap: (task) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          CreateTaskHive(taskToEdit: task),
+                                    ),
+                                  );
+                                },
+                              ),
+                              if (index != box.length - 1)
+                                Divider(color: Colors.grey[300], height: 1),
+                            ],
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
@@ -187,45 +207,65 @@ class TodoPageHive extends StatelessWidget {
             top: 350,
             left: 20,
             right: 20,
+
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Container(
                 color: Colors.white,
-                height: 210,
                 child: ValueListenableBuilder(
                   valueListenable: tasksBox.listenable(),
                   builder: (context, Box<Task> box, _) {
-                    if (box.isEmpty) {
-                      return const Center(child: Text('No tasks'));
+                    // Lấy danh sách các task đã hoàn thành
+                    final completedTasks = box.values
+                        .where((task) => task.isCompleted)
+                        .toList();
+
+                    // Kiểm tra danh sách rỗng
+                    if (completedTasks.isEmpty) {
+                      return Container(
+                        height: 70,
+                        child: const Center(child: Text('No tasks')),
+                      );
                     }
-                    return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: box.length,
-                      itemBuilder: (context, index) {
-                        final task = box.getAt(index);
-                        if (task == null || !task.isCompleted) {
-                          return const SizedBox.shrink();
-                        }
-                        return Column(
-                          children: [
-                            TaskItem(
-                              task: task,
-                              onChecked: (value) => onChecked(value, task),
-                              onTap: (task) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        CreateTaskHive(taskToEdit: task),
-                                  ),
-                                );
-                              },
-                            ),
-                            if (index != box.length - 1)
-                              Divider(color: Colors.grey[300], height: 1),
-                          ],
-                        );
-                      },
+                    // Tính chiều cao động: mỗi TaskItem 70px, tối đa 210px
+                    double dynamicHeight = min(
+                      completedTasks.length * 70.0,
+                      210.0,
+                    );
+                    return SizedBox(
+                      height: dynamicHeight,
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: box.length,
+                        itemBuilder: (context, index) {
+                          final task = box.getAt(index);
+                          if (task == null || !task.isCompleted) {
+                            return const SizedBox.shrink();
+                          }
+                          return Column(
+                            children: [
+                              TaskItem(
+                                task: task,
+                                onChecked: (value) => onChecked(value, task),
+                                onTap: (task) {
+                                  task.isCompleted
+                                      ? ""
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => CreateTaskHive(
+                                              taskToEdit: task,
+                                            ),
+                                          ),
+                                        );
+                                },
+                              ),
+                              if (index != box.length - 1)
+                                Divider(color: Colors.grey[300], height: 1),
+                            ],
+                          );
+                        },
+                      ),
                     );
                   },
                 ),

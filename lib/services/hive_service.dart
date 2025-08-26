@@ -43,4 +43,10 @@ class HiveService {
 
   // Tổng số task
   int get taskCount => _taskBox.length;
+  // Tổng số taskIsCompleted
+  int taskIsCompletedCount(bool isCompleted) {
+    return _taskBox.values
+        .where((task) => task.isCompleted == isCompleted)
+        .length;
+  }
 }

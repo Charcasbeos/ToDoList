@@ -99,7 +99,12 @@ class _TaskItemState extends State<TaskItem> {
                               intToTimeOfDay(
                                 widget.task.timeInMinutes!,
                               ).format(context),
-                              style: TextStyle(fontSize: 14),
+                              style: TextStyle(
+                                decoration: widget.task.isCompleted
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                fontSize: 14,
+                              ),
                             ),
                         ],
                       ),

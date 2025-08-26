@@ -219,6 +219,7 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
             TextField(
               decoration: InputDecoration(
                 hintText: "Task title",
+                hintStyle: TextStyle(color: Colors.grey.shade400),
                 // filled: true, // phải bật để dùng fillColor
                 fillColor: Colors.white, // màu nền
                 border: OutlineInputBorder(
@@ -312,6 +313,7 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                         style: TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           hintText: "Date",
+                          hintStyle: TextStyle(color: Colors.grey.shade400),
                           fillColor: Colors.white, // màu nền
                           filled: true,
                           suffixIcon: const Icon(
@@ -368,6 +370,7 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                         style: TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           hintText: "Time",
+                          hintStyle: TextStyle(color: Colors.grey.shade400),
                           suffixIcon: const Icon(
                             Icons.access_time,
                             color: Color(0xFF5b498b),
@@ -419,6 +422,7 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                 textAlignVertical: TextAlignVertical.top,
                 decoration: InputDecoration(
                   hintText: "Notes",
+                  hintStyle: TextStyle(color: Colors.grey.shade400),
                   // filled: true, // phải bật để dùng fillColor
                   fillColor: Colors.white, // màu nền
                   border: OutlineInputBorder(
@@ -459,7 +463,7 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
 
             // Save or Update button
             Container(
-              padding: EdgeInsets.only(top: 27),
+              padding: EdgeInsets.only(top: 25),
               child: GestureDetector(
                 onTap: saveTask,
                 child: Row(
