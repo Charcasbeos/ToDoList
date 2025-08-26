@@ -40,18 +40,7 @@ class TodoPageHive extends StatelessWidget {
                     decoration: const BoxDecoration(color: Color(0xFF4A3780)),
                     height: 222,
                     width: 390,
-                    child: const Padding(
-                      padding: EdgeInsets.only(top: 46),
-                      child: Text(
-                        "My Todo List",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 30,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    child: const Padding(padding: EdgeInsets.only(top: 46)),
                   ),
                   // Circle 1
                   Positioned(
@@ -83,6 +72,18 @@ class TodoPageHive extends StatelessWidget {
                           width: 35,
                         ),
                       ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 60, vertical: 40),
+                    child: Text(
+                      "My Todo List",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 30,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
