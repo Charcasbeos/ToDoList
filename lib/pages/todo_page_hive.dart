@@ -86,7 +86,7 @@ class TodoPageHive extends StatelessWidget {
               // Button Add new Task
               Expanded(
                 child: Container(
-                  margin: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 20),
                   color: const Color(0xFFF1F5F9),
                   child: GestureDetector(
                     onTap: () {

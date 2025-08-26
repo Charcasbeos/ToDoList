@@ -208,7 +208,7 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
         ),
       ),
       body: Container(
-        color: Colors.white,
+        color: Color(0xfff1f5f9),
         padding: EdgeInsets.only(top: 16, left: 16, right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,9 +222,18 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                 // filled: true, // phải bật để dùng fillColor
                 fillColor: Colors.white, // màu nền
                 border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5), // bo tròn
+                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+                ),
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                   borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+                ),
+
                 filled: true,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 10,
@@ -265,7 +274,6 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: isSelected ? Colors.red : Colors.white,
-                              width: 1,
                             ),
                           ),
 
@@ -304,13 +312,34 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                         style: TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           hintText: "Date",
+                          fillColor: Colors.white, // màu nền
+                          filled: true,
                           suffixIcon: const Icon(
-                            Icons.calendar_today,
+                            Icons.calendar_today_outlined,
+                            size: 20,
                             color: Color(0xFF5b498b),
                           ),
 
                           border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5), // bo tròn
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
                           ),
                         ),
                         controller: TextEditingController(
@@ -343,9 +372,28 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                             Icons.access_time,
                             color: Color(0xFF5b498b),
                           ),
-
+                          fillColor: Colors.white, // màu nền
+                          filled: true,
                           border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5), // bo tròn
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
                           ),
                         ),
                         controller: TextEditingController(
@@ -374,6 +422,20 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
                   // filled: true, // phải bật để dùng fillColor
                   fillColor: Colors.white, // màu nền
                   border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5), // bo tròn
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade300,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade300,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5),
                     borderSide: BorderSide(
                       color: Colors.grey.shade300,
@@ -397,7 +459,7 @@ class _CreateTaskHiveState extends State<CreateTaskHive> {
 
             // Save or Update button
             Container(
-              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 27),
               child: GestureDetector(
                 onTap: saveTask,
                 child: Row(
