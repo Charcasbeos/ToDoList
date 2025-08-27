@@ -53,7 +53,7 @@ class _TaskItemState extends State<TaskItem> {
     final scale = screenWidth / 375; // 375 là width chuẩn (iPhone 11)
 
     return Padding(
-      padding: EdgeInsets.only(top: 8 * scale),
+      padding: EdgeInsets.only(top: 0 * scale),
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 12 * scale,
@@ -61,7 +61,7 @@ class _TaskItemState extends State<TaskItem> {
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16 * scale),
+          // borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
@@ -76,7 +76,7 @@ class _TaskItemState extends State<TaskItem> {
                     children: [
                       CircleAvatar(
                         backgroundColor: _getColor(widget.task.category),
-                        radius: 18 * scale,
+                        radius: 18,
                         child: Image.asset(
                           _getImage(widget.task.category),
                           color: Colors.black,
@@ -98,7 +98,7 @@ class _TaskItemState extends State<TaskItem> {
                                     ? TextDecoration.lineThrough
                                     : TextDecoration.none,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16 * scale,
+                                fontSize: 16,
                               ),
                             ),
                             if (widget.task.timeInMinutes != null)
